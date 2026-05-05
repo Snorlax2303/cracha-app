@@ -1,0 +1,13 @@
+{
+  "name": "cracha-app",
+  "version": "1.0.0",
+  "description": "Gerador de Crachás Corporativos - Futura Tecnologia",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 3000",
+    "start": "npx http-server -p 3000"
+  },
+  "keywords": ["cracha", "badge", "gerador", "corporativo"],
+  "author": "Futura Tecnologia",
+  "license": "MIT"
+}

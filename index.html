@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Gerador de Crachá · Futura Tecnologia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep:        #0A0E1A;
+      --bg-mid:         #111827;
+      --surface:        #FFFFFF;
+      --surface-soft:   #F8FAFC;
+      --line:           #E2E8F0;
+      --line-strong:    #CBD5E1;
+      --ink:            #0F172A;
+      --ink-soft:       #475569;
+      --ink-muted:      #94A3B8;
+      --brand:          #0F4C75;
+      --brand-2:        #1E88A8;
+      --brand-glow:     #3CC4D9;
+      --accent:         #F59E0B;
+      --success:        #10B981;
+      --danger:         #EF4444;
+      --radius-sm:      8px;
+      --radius:         14px;
+      --radius-lg:      20px;
+      --shadow-sm:      0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow:         0 10px 30px -10px rgba(15, 23, 42, 0.25);
+      --shadow-lg:      0 25px 60px -15px rgba(15, 23, 42, 0.35);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { min-height: 100%; width: 100%; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(60,196,217,0.18), transparent 60%),
+        radial-gradient(900px 500px at -10% 110%, rgba(15,76,117,0.35), transparent 60%),
+        linear-gradient(160deg, var(--bg-deep) 0%, var(--bg-mid) 60%, #0d1628 100%);
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Subtle grid texture overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    /* ---------- HEADER ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      animation: fadeDown .6s ease both;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+    .brand-mark .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--brand-glow);
+      box-shadow: 0 0 20px var(--brand-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .brand-mark .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.7);
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 48px;
+      animation: fadeDown .7s ease .1s both;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--brand-glow), #93E5F1);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p {
+      font-size: clamp(14px, 3vw, 16px);
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ---------- MAIN GRID ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ---------- FORM CARD ---------- */
+    .panel {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.6);
+      animation: slideLeft .7s ease .2s both;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .panel-head h2 {
+      font-size: clamp(18px, 4vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .panel-head .step {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .field { margin-bottom: 22px; }
+    .field-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .field-label .num {
+      width: 20px; height: 20px;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .input {
+      width: 100%;
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 16px;
+      color: var(--ink);
+      background: var(--surface-soft);
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      transition: all .2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .input:hover { border-color: var(--line-strong); }
+    .input:focus {
+      outline: none;
+      background: #fff;
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 4px rgba(30,136,168,0.12);
+    }
+    .input::placeholder { color: var(--ink-muted); }
+
+    /* Photo upload */
+    .upload {
+      position: relative;
+      border: 2px dashed var(--line-strong);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+      background: var(--surface-soft);
+      cursor: pointer;
+      transition: all .25s ease;
+      overflow: hidden;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    .upload:hover {
+      border-color: var(--brand-2);
+      background: #F0F9FB;
+      transform: translateY(-1px);
+    }
+    .upload:active {
+      transform: translateY(0);
+    }
+    .upload.dragging {
+      border-color: var(--brand-2);
+      border-style: solid;
+      background: #E6F4F7;
+    }
+    .upload.has-file {
+      border-color: var(--success);
+      border-style: solid;
+      background: #F0FDF4;
+      padding: 12px;
+    }
+    .upload-icon {
+      width: 52px; height: 52px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 22px;
+      pointer-events: none;
+    }
+    .upload-text {
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+      pointer-events: none;
+    }
+    .upload-hint {
+      font-size: 12px;
+      color: var(--ink-muted);
+      pointer-events: none;
+    }
+    .upload-preview {
+      display: none;
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* Camera button */
+    .camera-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .camera-btn {
+      flex: 1;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--brand-2);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all .2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      touch-action: manipulation;
+    }
+    .camera-btn:active {
+      transform: scale(0.98);
+    }
+    .camera-btn:hover {
+      background: var(--brand);
+      transform: translateY(-1px);
+    }
+    .camera-btn.secondary {
+      background: var(--surface-soft);
+      color: var(--ink);
+      border: 1.5px solid var(--line);
+    }
+    .camera-btn.secondary:hover {
+      background: #fff;
+      border-color: var(--line-strong);
+    }
+
+    /* Buttons */
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all .2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1.5px solid transparent;
+      -webkit-appearance: none;
+      appearance: none;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-ghost {
+      background: var(--surface-soft);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .btn-ghost:hover {
+      background: #fff;
+      border-color: var(--line-strong);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: #fff;
+      box-shadow: 0 8px 20px -8px rgba(15,76,117,0.6);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -10px rgba(15,76,117,0.7);
+    }
+
+    /* ---------- PREVIEW ---------- */
+    .preview {
+      animation: slideRight .7s ease .3s both;
+      position: sticky;
+      top: 30px;
+    }
+    .preview-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 24px 24px 28px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    .preview-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .preview-head h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .preview-head .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--success);
+    }
+    .preview-head .live::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .canvas-frame {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 30px 0 10px;
+      background:
+        radial-gradient(ellipse at top, rgba(15,76,117,0.06), transparent 70%),
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(15,76,117,0.02) 10px, rgba(15,76,117,0.02) 11px);
+      border-radius: var(--radius);
+    }
+    .canvas-frame canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.06),
+        0 30px 60px -20px rgba(15, 23, 42, 0.4),
+        0 18px 36px -18px rgba(15, 76, 117, 0.4);
+      transition: transform .3s ease;
+    }
+    .canvas-frame canvas:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-muted);
+      flex-wrap: wrap;
+    }
+    .meta span { display: inline-flex; align-items: center; gap: 6px; }
+    .meta .sep { width: 4px; height: 4px; background: var(--ink-muted); border-radius: 50%; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all .35s cubic-bezier(.2,.9,.3,1.4);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      font-size: 14px;
+      font-weight: 500;
+      max-width: 90vw;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.error { background: var(--danger); }
+    .toast .check {
+      width: 22px; height: 22px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 13px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .toast.error .check { background: rgba(255,255,255,0.25); }
+
+    /* Input hidden */
+    input[type="file"] {
+      display: none;
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    /* ---------- MOBILE RESPONSIVO ---------- */
+    @media (max-width: 1024px) {
+      body { padding: 30px 16px 60px; }
+      .panel { padding: 24px; }
+      .grid { gap: 24px; }
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .preview { position: static; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .pill { align-self: flex-end; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 20px 12px 50px; }
+      .wrap { max-width: 100%; }
+      
+      .topbar { margin-bottom: 24px; gap: 8px; }
+      .brand-mark .label { display: none; }
+      
+      .hero { margin-bottom: 32px; }
+      .hero h1 { font-size: 24px; margin-bottom: 12px; }
+      .hero p { font-size: 13px; }
+      
+      .panel { padding: 20px; border-radius: 16px; }
+      .panel-head { margin-bottom: 20px; padding-bottom: 16px; }
+      .panel-head h2 { font-size: 18px; }
+      .panel-head .step { display: none; }
+      
+      .field { margin-bottom: 18px; }
+      .field-label { font-size: 11px; }
+      
+      .input { 
+        padding: 12px 14px;
+        font-size: 16px;
+      }
+      
+      .upload { padding: 20px; }
+      .upload-icon { width: 48px; height: 48px; font-size: 20px; }
+      
+      .camera-options {
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .camera-btn {
+        padding: 11px;
+        font-size: 12px;
+      }
+      
+      .actions {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 6px;
+      }
+      
+      .btn { font-size: 14px; padding: 12px 16px; }
+      
+      .preview-card { padding: 20px 16px 24px; }
+      .canvas-frame { padding: 20px 0 8px; }
+      
+      .meta { gap: 10px; font-size: 10px; }
+      .meta .sep { width: 3px; height: 3px; }
+      
+      .toast {
+        bottom: 16px;
+        right: 12px;
+        left: 12px;
+        padding: 12px 16px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 16px 10px 45px; }
+      .hero h1 { font-size: 22px; }
+      .panel { padding: 16px; }
+      .upload { padding: 16px; }
+      .input { font-size: 16px; padding: 12px; }
+      .btn { font-size: 13px; padding: 11px 14px; }
+    }
+
+    /* Safe area para notch */
+    @supports (padding: max(0px)) {
+      body {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+        padding-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="brand-mark">
+        <span class="dot"></span>
+        <span class="label">Futura · ID System</span>
+      </div>
+      <div class="pill">v 2.0 · 300 DPI</div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h1>Gerador de <span>Crachás</span></h1>
+      <p>Crie identificadores corporativos profissionais para sua equipe em segundos. Pronto para impressão em alta resolução.</p>
+    </section>
+
+    <!-- Main grid -->
+    <main class="grid">
+      <!-- Form panel -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Dados do colaborador</h2>
+          <span class="step">PASSO 1 / 1</span>
+        </div>
+
+        <!-- Photo -->
+        <div class="field">
+          <label class="field-label"><span class="num">1</span> Foto do colaborador</label>
+          <div class="upload" id="uploadBox">
+            <input type="file" id="photoInput" accept="image/*" capture="environment">
+            <input type="file" id="cameraInput" accept="image/*" capture="user">
+            <div id="uploadContent">
+              <div class="upload-icon">📷</div>
+              <p class="upload-text">Clique ou arraste a foto aqui</p>
+              <p class="upload-hint">JPG, PNG, WebP · proporção 1:1 recomendada</p>
+            </div>
+            <img id="photoPreview" class="upload-preview" alt="Pré-visualização">
+          </div>
+          <div class="camera-options">
+            <button class="camera-btn" id="cameraBtn" type="button" title="Abrir câmera">
+              📷 Câmera
+            </button>
+            <button class="camera-btn secondary" id="galleryBtn" type="button" title="Abrir galeria">
+              🖼️ Galeria
+            </button>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="field">
+          <label class="field-label"><span class="num">2</span> Nome completo</label>
+          <input type="text" id="nameInput" class="input" placeholder="Ex: Maria Eduarda Silva" autocomplete="name">
+        </div>
+
+        <!-- Document -->
+        <div class="field">
+          <label class="field-label"><span class="num">3</span> CPF / Documento</label>
+          <input type="text" id="docInput" class="input" placeholder="000.000.000-00" maxlength="14" inputmode="numeric">
+        </div>
+
+        <!-- Role (opcional) -->
+        <div class="field">
+          <label class="field-label"><span class="num">4</span> Cargo / Função <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-muted);">(opcional)</span></label>
+          <input type="text" id="roleInput" class="input" placeholder="Ex: Analista de Sistemas" autocomplete="off">
+        </div>
+
+        <!-- Buttons -->
+        <div class="actions">
+          <button class="btn btn-ghost" id="resetBtn" type="button">
+            <span>↻</span> Limpar
+          </button>
+          <button class="btn btn-primary" id="downloadBtn" type="button">
+            <span>↓</span> Baixar crachá
+          </button>
+        </div>
+      </section>
+
+      <!-- Preview -->
+      <aside class="preview">
+        <div class="preview-card">
+          <div class="preview-head">
+            <h3>Pré-visualização</h3>
+            <span class="live">AO VIVO</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="cracha" width="645" height="1024"></canvas>
+          </div>
+          <div class="meta">
+            <span>📄 645 × 1024 px</span>
+            <span class="sep"></span>
+            <span>🎨 300 DPI</span>
+            <span class="sep"></span>
+            <span>📥 .JPG</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <div class="check">✓</div>
+    <span id="toastMsg">Crachá baixado com sucesso!</span>
+  </div>
+
+  <script>
+    // ===== Logo da Futura embutido em base64 =====
+    const LOGO_DATA = 'data:image/jpeg;base64,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';
+
+    const canvas = document.getElementById('cracha');
+    const ctx = canvas.getContext('2d');
+    const W = 645, H = 1024;
+
+    let photoImg = null;
+    let logoImg  = new Image();
+    logoImg.onload = () => drawCracha();
+    logoImg.src = LOGO_DATA;
+
+    // ===== Elementos DOM =====
+    const uploadBox = document.getElementById('uploadBox');
+    const photoInput = document.getElementById('photoInput');
+    const cameraInput = document.getElementById('cameraInput');
+    const cameraBtn = document.getElementById('cameraBtn');
+    const galleryBtn = document.getElementById('galleryBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // ===== Event Listeners =====
+    cameraBtn.addEventListener('click', () => cameraInput.click());
+    galleryBtn.addEventListener('click', () => photoInput.click());
+    resetBtn.addEventListener('click', resetForm);
+    downloadBtn.addEventListener('click', downloadCracha);
+
+    cameraInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) loadPhoto(file);
+    });
+
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) loadPhoto(file);
+    });
+
+    // Drag and drop
+    uploadBox.addEventListener('dragover', e => {
+      e.preventDefault();
+      uploadBox.classList.add('dragging');
+    });
+    uploadBox.addEventListener('dragleave', () => uploadBox.classList.remove('dragging'));
+    uploadBox.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadBox.classList.remove('dragging');
+      const file = e.dataTransfer.files[0];
+      if (file) loadPhoto(file);
+    });
+
+    // Input listeners
+    document.getElementById('nameInput').addEventListener('input', drawCracha);
+    document.getElementById('roleInput').addEventListener('input', drawCracha);
+    document.getElementById('docInput').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 9)      v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+      else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+      else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+      e.target.value = v;
+      drawCracha();
+    });
+
+    // ===== Funções =====
+    function loadPhoto(file) {
+      if (!file.type.startsWith('image/')) {
+        showToast('Arquivo inválido. Envie uma imagem.', true);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        photoImg = new Image();
+        photoImg.onload = () => drawCracha();
+        photoImg.src = ev.target.result;
+        const preview = document.getElementById('photoPreview');
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+        document.getElementById('uploadContent').style.display = 'none';
+        uploadBox.classList.add('has-file');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function fitText(ctx, text, maxWidth) {
+      const words = text.split(' ');
+      let line1 = '', line2 = '';
+      for (const w of words) {
+        const test = line1 ? line1 + ' ' + w : w;
+        if (ctx.measureText(test).width <= maxWidth) line1 = test;
+        else { line2 = (line2 ? line2 + ' ' : '') + w; }
+      }
+      while (line2 && ctx.measureText(line2).width > maxWidth) {
+        line2 = line2.slice(0, -1);
+      }
+      if (line2 && line2 !== words.slice(-1)[0]) {
+        if (ctx.measureText(line2 + '…').width <= maxWidth) line2 += '…';
+      }
+      return line2 ? [line1, line2] : [line1];
+    }
+
+    // ===== DESENHO DO CRACHÁ =====
+    function drawCracha() {
+      ctx.clearRect(0, 0, W, H);
+
+      ctx.save();
+      roundRect(ctx, 0, 0, W, H, 28);
+      ctx.clip();
+
+      // Fundo branco
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, W, H);
+
+      // Topo azul gradiente
+      const topH = 280;
+      const topGrad = ctx.createLinearGradient(0, 0, W, topH);
+      topGrad.addColorStop(0,   '#0F4C75');
+      topGrad.addColorStop(0.55,'#1E88A8');
+      topGrad.addColorStop(1,   '#3CC4D9');
+      ctx.fillStyle = topGrad;
+      ctx.fillRect(0, 0, W, topH);
+
+      // Padrão de pontos
+      ctx.save();
+      ctx.globalAlpha = 0.15;
+      ctx.fillStyle = '#FFFFFF';
+      for (let y = 20; y < topH - 20; y += 22) {
+        for (let x = 20; x < W - 20; x += 22) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+
+      // Brilho
+      const shine = ctx.createLinearGradient(0, 0, W, topH);
+      shine.addColorStop(0, 'rgba(255,255,255,0.18)');
+      shine.addColorStop(0.5, 'rgba(255,255,255,0)');
+      ctx.fillStyle = shine;
+      ctx.fillRect(0, 0, W, topH);
+
+      // Furo do crachá
+      ctx.save();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.roundRect(W/2 - 55, 22, 110, 16, 8);
+      ctx.fill();
+      ctx.restore();
+
+      // Logo
+      if (logoImg.complete && logoImg.naturalWidth > 0) {
+        const logoBoxW = 280;
+        const logoBoxH = 100;
+        const logoBoxX = (W - logoBoxW) / 2;
+        const logoBoxY = 70;
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.15)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetY = 4;
+        ctx.fillStyle = '#FFFFFF';
+        roundRect(ctx, logoBoxX, logoBoxY, logoBoxW, logoBoxH, 16);
+        ctx.fill();
+        ctx.restore();
+
+        const ratio = logoImg.naturalWidth / logoImg.naturalHeight;
+        const pad = 14;
+        let drawW = logoBoxW - pad * 2;
+        let drawH = drawW / ratio;
+        if (drawH > logoBoxH - pad * 2) {
+          drawH = logoBoxH - pad * 2;
+          drawW = drawH * ratio;
+        }
+        const dx = logoBoxX + (logoBoxW - drawW) / 2;
+        const dy = logoBoxY + (logoBoxH - drawH) / 2;
+        ctx.drawImage(logoImg, dx, dy, drawW, drawH);
+      }
+
+      // Faixa decorativa âmbar
+      ctx.save();
+      ctx.fillStyle = '#F59E0B';
+      ctx.beginPath();
+      ctx.moveTo(0, topH);
+      ctx.lineTo(W, topH - 10);
+      ctx.lineTo(W, topH + 8);
+      ctx.lineTo(0, topH + 18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // Foto circular
+      const photoSize = 280;
+      const photoCX = W / 2;
+      const photoCY = topH + 30 + photoSize / 2;
+      const photoR  = photoSize / 2;
+
+      const ringGrad = ctx.createLinearGradient(
+        photoCX - photoR, photoCY - photoR,
+        photoCX + photoR, photoCY + photoR
+      );
+      ringGrad.addColorStop(0, '#0F4C75');
+      ringGrad.addColorStop(0.5, '#1E88A8');
+      ringGrad.addColorStop(1, '#3CC4D9');
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(15, 76, 117, 0.4)';
+      ctx.shadowBlur = 30;
+      ctx.shadowOffsetY = 10;
+      ctx.fillStyle = ringGrad;
+      ctx.beginPath();
+      ctx.arc(photoCX, photoCY, photoR + 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(photoCX, photoCY, photoR + 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(photoCX, photoCY, photoR, 0, Math.PI * 2);
+      ctx.clip();
+
+      if (photoImg) {
+        const iw = photoImg.naturalWidth;
+        const ih = photoImg.naturalHeight;
+        const scale = Math.max(photoSize / iw, photoSize / ih);
+        const dw = iw * scale;
+        const dh = ih * scale;
+        const dx = photoCX - dw / 2;
+        const dy = photoCY - dh / 2;
+        ctx.drawImage(photoImg, dx, dy, dw, dh);
+      } else {
+        const pg = ctx.createLinearGradient(
+          photoCX - photoR, photoCY - photoR,
+          photoCX + photoR, photoCY + photoR
+        );
+        pg.addColorStop(0, '#E2E8F0');
+        pg.addColorStop(1, '#CBD5E1');
+        ctx.fillStyle = pg;
+        ctx.fillRect(photoCX - photoR, photoCY - photoR, photoSize, photoSize);
+
+        ctx.fillStyle = '#94A3B8';
+        ctx.beginPath();
+        ctx.arc(photoCX, photoCY - 30, 50, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(photoCX, photoCY + 110, 110, Math.PI, 0);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Informações
+      const infoY = photoCY + photoR + 60;
+
+      const name = (document.getElementById('nameInput').value || 'NOME COMPLETO').toUpperCase();
+      ctx.fillStyle = '#0F172A';
+      ctx.textAlign = 'center';
+      ctx.font = '700 32px "Plus Jakarta Sans", Arial, sans-serif';
+      const lines = fitText(ctx, name, W - 80);
+      lines.forEach((ln, i) => {
+        ctx.fillText(ln, W / 2, infoY + i * 38);
+      });
+
+      const afterName = infoY + (lines.length * 38) + 8;
+      const role = document.getElementById('roleInput').value.trim();
+      let cursorY = afterName;
+      if (role) {
+        ctx.fillStyle = '#1E88A8';
+        ctx.font = '500 18px "Plus Jakarta Sans", Arial, sans-serif';
+        ctx.fillText(role, W / 2, cursorY + 20);
+        cursorY += 38;
+      }
+
+      ctx.fillStyle = '#F59E0B';
+      roundRect(ctx, W / 2 - 30, cursorY + 16, 60, 4, 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = '600 11px "JetBrains Mono", monospace';
+      ctx.fillText('CPF · DOCUMENTO', W / 2, cursorY + 50);
+
+      const doc = document.getElementById('docInput').value || '000.000.000-00';
+      ctx.fillStyle = '#0F4C75';
+      ctx.font = '700 26px "JetBrains Mono", monospace';
+      ctx.fillText(doc, W / 2, cursorY + 84);
+
+      // Rodapé
+      const footerH = 90;
+      const footerY = H - footerH;
+
+      const footerGrad = ctx.createLinearGradient(0, footerY, W, H);
+      footerGrad.addColorStop(0, '#0F4C75');
+      footerGrad.addColorStop(1, '#1E88A8');
+      ctx.fillStyle = footerGrad;
+      ctx.fillRect(0, footerY, W, footerH);
+
+      ctx.fillStyle = '#F59E0B';
+      ctx.fillRect(0, footerY, W, 4);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.95)';
+      ctx.font = '700 14px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('FUTURA TECNOLOGIA', 30, footerY + 38);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.65)';
+      ctx.font = '500 11px "JetBrains Mono", monospace';
+      ctx.fillText('IDENTIFICAÇÃO CORPORATIVA', 30, footerY + 58);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      const barX = W - 130;
+      const barY = footerY + 28;
+      const widths = [3, 1, 2, 1, 4, 2, 1, 3, 2, 1, 3, 1, 2, 4, 1, 2, 3];
+      let cx = barX;
+      for (const w of widths) {
+        ctx.fillRect(cx, barY, w, 34);
+        cx += w + 2;
+      }
+
+      ctx.restore();
+
+      ctx.strokeStyle = 'rgba(15, 23, 42, 0.08)';
+      ctx.lineWidth = 1;
+      roundRect(ctx, 0.5, 0.5, W - 1, H - 1, 28);
+      ctx.stroke();
+    }
+
+    function resetForm() {
+      photoInput.value = '';
+      cameraInput.value = '';
+      document.getElementById('nameInput').value = '';
+      document.getElementById('docInput').value = '';
+      document.getElementById('roleInput').value = '';
+      document.getElementById('photoPreview').style.display = 'none';
+      document.getElementById('uploadContent').style.display = 'block';
+      uploadBox.classList.remove('has-file');
+      photoImg = null;
+      drawCracha();
+      showToast('Formulário limpo', false);
+    }
+
+    function downloadCracha() {
+      const name = document.getElementById('nameInput').value.trim();
+      const doc  = document.getElementById('docInput').value.trim();
+
+      if (!name) return showToast('Preencha o nome do colaborador', true);
+      if (!doc || doc.length < 14) return showToast('Preencha o CPF/Documento', true);
+      if (!photoImg) return showToast('Adicione uma foto do colaborador', true);
+
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name.replace(/\s+/g, '_') + '_cracha.jpg';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Crachá baixado com sucesso!', false);
+      }, 'image/jpeg', 0.95);
+    }
+
+    let toastTimer;
+    function showToast(msg, isError) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.toggle('error', !!isError);
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    drawCracha();
+  </script>
+</body>
+</html>
