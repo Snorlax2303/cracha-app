@@ -1,13 +1,14 @@
 {
   "name": "cracha-app",
   "version": "1.0.0",
-  "description": "Gerador de Crachás Corporativos - Futura Tecnologia",
+  "description": "Gerador de crachÃ¡s Microset e etiquetas de bloqueio",
   "main": "index.html",
   "scripts": {
     "dev": "npx http-server -p 3000",
     "start": "npx http-server -p 3000"
   },
   "keywords": ["cracha", "badge", "gerador", "corporativo"],
-  "author": "Futura Tecnologia",
+  "author": "Microset",
   "license": "MIT"
 }
+

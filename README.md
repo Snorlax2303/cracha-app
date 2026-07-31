@@ -1,34 +1,34 @@
-# Gerador de Crachás - Futura Tecnologia
+# Gerador de CrachÃ¡s - Microset
 
-Aplicação web para gerar crachás corporativos profissionais em alta resolução (300 DPI).
+AplicaÃ§Ã£o web para gerar crachÃ¡s corporativos da Microset e etiquetas de bloqueio/perigo prontas para impressÃ£o.
 
-## 🚀 Características
+## ðŸš€ CaracterÃ­sticas
 
-- **Logo da Futura** integrado ao design do crachá
+- **Logo da Futura** integrado ao design do crachÃ¡
 - **Design moderno** com gradientes e efeitos visuais
 - **Foto circular** com anel gradiente e sombra realista
-- **Campos customizáveis**: Nome, CPF, Cargo
-- **Pré-visualização em tempo real** (live preview)
-- **Pronto para impressão** em 645×1024px (300 DPI)
-- **Totalmente offline** após carregar
+- **Campos customizÃ¡veis**: Nome, CPF, Cargo
+- **PrÃ©-visualizaÃ§Ã£o em tempo real** (live preview)
+- **Pronto para impressÃ£o** em 645Ã—1024px (300 DPI)
+- **Totalmente offline** apÃ³s carregar
 - **Responsivo** (funciona em mobile)
 
-## 🛠️ Stack
+## ðŸ› ï¸ Stack
 
-- HTML5 Canvas para renderização do crachá
-- CSS3 com variáveis (design tokens)
-- JavaScript vanilla (sem dependências)
+- HTML5 Canvas para renderizaÃ§Ã£o do crachÃ¡
+- CSS3 com variÃ¡veis (design tokens)
+- JavaScript vanilla (sem dependÃªncias)
 - Tipografia: Plus Jakarta Sans + JetBrains Mono
 - Hospedado no Vercel (serverless)
 
-## 📦 Instalação Local
+## ðŸ“¦ InstalaÃ§Ã£o Local
 
 ```bash
-# Clone o repositório
+# Clone o repositÃ³rio
 git clone https://github.com/seu-usuario/cracha-app.git
 cd cracha-app
 
-# Instale as dependências (opcional, apenas para dev server)
+# Instale as dependÃªncias (opcional, apenas para dev server)
 npm install
 
 # Inicie o servidor de desenvolvimento
@@ -37,9 +37,9 @@ npm run dev
 
 Abra `http://localhost:3000` no navegador.
 
-## 🌐 Deploy no Vercel
+## ðŸŒ Deploy no Vercel
 
-### Opção 1: Vercel CLI (Recomendado)
+### OpÃ§Ã£o 1: Vercel CLI (Recomendado)
 
 ```bash
 # Instale o Vercel CLI
@@ -51,7 +51,7 @@ vercel
 # Siga os prompts para conectar sua conta GitHub e fazer deploy
 ```
 
-### Opção 2: GitHub + Vercel Dashboard
+### OpÃ§Ã£o 2: GitHub + Vercel Dashboard
 
 1. **Envie para GitHub**
    ```bash
@@ -67,69 +67,70 @@ vercel
    - Acesse [vercel.com](https://vercel.com)
    - Clique em "New Project"
    - Selecione "Import Git Repository"
-   - Escolha seu repositório
+   - Escolha seu repositÃ³rio
    - Clique em "Deploy"
 
-### Opção 3: Drop-in Deploy (Mais Simples)
+### OpÃ§Ã£o 3: Drop-in Deploy (Mais Simples)
 
 ```bash
 # Sem Git, apenas deploy direto
 vercel --prod
 ```
 
-## 📝 Como Usar
+## ðŸ“ Como Usar
 
 1. **Carregue a foto** do colaborador (clique ou arraste)
 2. **Preencha o nome** completo
 3. **Insira o CPF** ou documento
-4. **(Opcional)** Adicione o cargo/função
-5. **Clique em "Baixar crachá"** para exportar como JPG
+4. **(Opcional)** Adicione o cargo/funÃ§Ã£o
+5. **Clique em "Baixar crachÃ¡"** para exportar como JPG
 
-## 🎨 Personalização
+## ðŸŽ¨ PersonalizaÃ§Ã£o
 
-Para mudar cores, fontes ou layout, edite as variáveis CSS no `<style>`:
+Para mudar cores, fontes ou layout, edite as variÃ¡veis CSS no `<style>`:
 
 ```css
 :root {
-  --brand: #0F4C75;      /* Cor primária */
-  --brand-2: #1E88A8;    /* Cor secundária */
+  --brand: #0F4C75;      /* Cor primÃ¡ria */
+  --brand-2: #1E88A8;    /* Cor secundÃ¡ria */
   --accent: #F59E0B;     /* Cor de destaque */
   /* ... */
 }
 ```
 
-## 📄 Estrutura do Projeto
+## ðŸ“„ Estrutura do Projeto
 
 ```
 cracha-app/
-├── index.html          # Aplicação completa (HTML + CSS + JS)
-├── package.json        # Metadados do projeto
-├── vercel.json         # Configuração de deploy
-├── .gitignore          # Arquivos a ignorar no Git
-└── README.md           # Este arquivo
+â”œâ”€â”€ index.html          # AplicaÃ§Ã£o completa (HTML + CSS + JS)
+â”œâ”€â”€ package.json        # Metadados do projeto
+â”œâ”€â”€ vercel.json         # ConfiguraÃ§Ã£o de deploy
+â”œâ”€â”€ .gitignore          # Arquivos a ignorar no Git
+â””â”€â”€ README.md           # Este arquivo
 ```
 
-## 🔒 Segurança
+## ðŸ”’ SeguranÃ§a
 
-- Nenhum dado é enviado para servidores (tudo é processado no navegador)
-- Logo embutido em base64 (sem requisições HTTP)
-- Sem cookies, sem tracking, sem análitica
+- Nenhum dado Ã© enviado para servidores (tudo Ã© processado no navegador)
+- Logo embutido em base64 (sem requisiÃ§Ãµes HTTP)
+- Sem cookies, sem tracking, sem anÃ¡litica
 
-## 📱 Compatibilidade
+## ðŸ“± Compatibilidade
 
-- ✅ Chrome/Edge (latest)
-- ✅ Firefox (latest)
-- ✅ Safari (latest)
-- ✅ Mobile browsers
+- âœ… Chrome/Edge (latest)
+- âœ… Firefox (latest)
+- âœ… Safari (latest)
+- âœ… Mobile browsers
 
-## 📄 Licença
+## ðŸ“„ LicenÃ§a
 
 MIT - Use livremente em seus projetos!
 
-## 👥 Autor
+## ðŸ‘¥ Autor
 
-**Futura Tecnologia** - Desenvolvido com ❤️
+**Futura Tecnologia** - Desenvolvido com â¤ï¸
 
 ---
 
 **Precisa de ajuda?** Abra uma issue ou entre em contato.
+
